@@ -1,8 +1,9 @@
+#!/bin/bash
 try() {
   expected="$1"
   input="$2"
 
-  ./main "$input" > tmp.s
+  ./9cc "$input" > tmp.s
   gcc -o tmp tmp.s
   ./tmp
   actual="$?"
@@ -19,4 +20,3 @@ try 0 0
 try 42 42
 
 echo OK
-pause
