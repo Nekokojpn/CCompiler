@@ -10,11 +10,22 @@ enum{
     TK_EOF,
 };
 
+enum{
+    ND_NUM =256,
+};
+
 typedef struct{
     int ty;
     int val;
     char *input;
 }Token;
+
+typedef struct Node{
+    int ty;
+    struct Node *lhs;
+    struct Node *rhs;
+    int val;
+}Node;
 
 char *input;
 
@@ -35,6 +46,23 @@ void error_at(char *loc, char *msg){
     fprintf(stderr,"^ %s\n",msg);
     exit(1);
 }
+
+Node *new_node(int ty,Node *lhs,Node *rhs){
+    Node *node = malloc(sizeof(Node));
+    node->ty = ty;
+    node->lhs = lhs;
+    node->rhs = rhs;
+    return node;
+}
+
+Node *new_node_num(int val){
+    Node *node = malloc(sizeof(Node));
+    node->ty = ND_NUM;
+    node->val = val;
+    return node;
+}
+
+
 void tokenize(){
     char *p = input;
     int i = 0;
